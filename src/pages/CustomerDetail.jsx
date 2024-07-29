@@ -6,6 +6,10 @@ import WorkList from '../components/WorkList'
 
 function CustomerDetail() {
 
+    const[refreshRequired,setRefreshRequired]=useState()
+
+    const[workId,setWorkId]=useState()
+
     
 
     // extract url parameters  eg:localhost:5173/customer/{id}
@@ -77,8 +81,8 @@ function CustomerDetail() {
        </div>
    </div>}
 
-   <WorkCreate custId={id}></WorkCreate>
-   <WorkList custId={id}></WorkList>
+   <WorkCreate custId={id} setRefreshRequired={setRefreshRequired} workId={workId}></WorkCreate>
+   <WorkList custId={id} refreshRequired={refreshRequired} setWorkId={setWorkId}></WorkList>
 
    
    </div>

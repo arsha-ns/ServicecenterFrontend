@@ -23,3 +23,13 @@ export async function addWorkApi(custId,data){
 
     return await  axios.post(BASE_URL+`customers/${custId}/work/`,data)
 }
+
+export async function retrieveWorkApi(workId){
+
+    return await axios.get(BASE_URL+`work/${workId}/`)
+}
+
+export async function updateWorkApi(workId,data){
+
+    return await axios.put(BASE_URL+`work/${workId}/`,data)
+}
