@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { retrieveCustomerApi } from '../services/Api'
+import { deleteWorkApi, retrieveCustomerApi } from '../services/Api'
 
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 
 function WorkList({custId,refreshRequired,setWorkId}) {
+
    
     const[works,setWorks]=useState()
 
     const[workTotal,setWorkTotal]=useState()
+
 
    async function fetchCustomerData(custId){
 
@@ -23,10 +25,29 @@ function WorkList({custId,refreshRequired,setWorkId}) {
         }
     }
 
+
+
     useEffect(()=>{
         fetchCustomerData(custId)
 
     },[refreshRequired])
+
+     
+    async function handleDelete(workId){
+
+        let res=await deleteWorkApi(workId)
+
+        if (res.status>199&& res.status<300){
+            fetchCustomerData(custId)
+
+        }    
+    }
+
+
+
+
+
+
 
   return (
     <div className='border my-5 shadow border border-2 border-dark p-3 rounded'>
@@ -44,7 +65,7 @@ function WorkList({custId,refreshRequired,setWorkId}) {
                 <td>{w.description}</td>
                 <td>{w.amount}</td>
                 <td className='d-flex gap-2'>
-                        <Button className='btn btn-danger' >
+                        <Button className='btn btn-danger'  onClick={()=>handleDelete(w.id)}>
                         <i class="fa-solid fa-trash"></i>
                         </Button>
 
@@ -58,7 +79,18 @@ function WorkList({custId,refreshRequired,setWorkId}) {
             </tr>
             
             )}
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Total:{workTotal}</td>
+                <td></td>
+
+
+            </tr>
+
            </tbody>
+
+
         </table>
     </div>
   )
